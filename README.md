@@ -10,5 +10,6 @@ Reference: https://en.wikipedia.org/wiki/1854_Broad_Street_cholera_outbreak
 5. The labels shows variables and colors used to represent the data. For example, for representing gender used blue and for female used orange.
 6. Included the given data of gender and age deaths in streets chart.
 7. Tried to establish linking on hover of line chart, the streets chart will show the points where the deaths took place.
+8. Below image shows count of deaths per day plotted using Tableau which matches the results shown in final D3 vizualization. For example:- The death count on September 1st is 143. 
 
 ![Death Count By Date](https://github.com/nupsing/Visualization_Project1/blob/main/images/Tableau_LineGraph.png)
