@@ -1,7 +1,12 @@
-# Heading
+# Description of Design Process
+I read the input files to understand how to connect the dataset with each other. Read the supporting pages to understand the cholera outbreak in London.
+Reference: https://en.wikipedia.org/wiki/1854_Broad_Street_cholera_outbreak
 
-1 page for the visualization itself: This should be a live, interactive version of the visualization you created. It is important that the visualization works in the Chrome web browser - this is the platform that we will be using for evaluating your work.
-1 documentation page that describes your work and documents the following:
-Your design process: How did you go about designing the visualization? What are some of the initial designs / ideas you attempted in the beginning? A good way to document your design process is to scan your sketches and include them in the documentation page.
-Rationale of your design choices: This should be a rigorous explanation of the design choices you made. For example, why did you use color to encode a particular variable? Why did you arrange your charts in a particular way?
-Describe how you used your visualizations to discover facts or answer questions you had. Include evidence to support your findings as screenshots from the visualization. In this case, we have a clear hypothesis to start with, but are there other nuggets of insights one can uncover?
+# Justification of Design Decisions
+1. I created the streets chart first and included the location of pumps using the given data for pumps location.
+2. Tried to plot a seperate chart for gender and number of deaths per gender.
+3. Selected the colors for workhouse and brewery bsed on color coding palette.
+4. Plotted the count of deaths per day line chart with x-axis representing the dates and y-axis representing the total deaths.
+5. The labels shows variables and colors used to represent the data. For example, for representing gender used blue and for female used orange.
+6. Included the given data of gender and age deaths in streets chart.
+7. Tried to establish linking on hover of line chart, the streets chart will show the points where the deaths took place.
