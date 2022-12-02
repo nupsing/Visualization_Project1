@@ -50,11 +50,12 @@
     var width = 700;
     var height = 700;
     var scaleFactor = 35;
-    var lineChartH = 500;
+    var lineChartH = 800;
     var lineChartW = 700;
     var colorByGender = true;
     var deathCount = 0;
     var useDeathCount = false;
+    var countsPerAgeGender = [];
 
     var svgStreetsContainer = d3.select("body")
       .append("svg")
@@ -237,6 +238,68 @@
         .text(function () { return "Mouse Over the above elliptical dot to view death count until day selected."; });
     }
 
+    function plotDeathDistribution() {      
+      var BarChart = svgLineChartContainer
+        .append('g')
+        .attr("id","test")
+        .attr('transform', 'translate(70,400)');
+      var x = d3.scale.ordinal()
+        .domain(countsPerAgeGender.map(function (d) { return d['label']; }))
+        .rangeRoundBands([0, 620], .1);
+
+      var y = d3.scale.linear()
+        .domain([0, 300])
+        .range([250, 0]);
+
+      var xAxis = d3.svg.axis().scale(x).orient("bottom");
+      var yAxis = d3.svg.axis().scale(y).orient("left").ticks(12);
+      
+      BarChart.append('g')
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + 250 + ")")
+        .call(xAxis)
+        .attr("stroke", "blue")
+        .attr("fill", "none")
+        .attr("stroke-width", "1px")
+        .append("text")
+        .attr("x", 270)
+        .attr("y", 40)
+        .text("Categories");
+
+      BarChart.append('g')
+        .attr("class", "y axis")
+        .call(yAxis)
+        .attr("stroke", "blue")
+        .attr("fill", "none")
+        .attr("stroke-width", "1px")
+        .append("text")
+        .attr("x", 10)
+        .attr("y", 10)
+        .text("Death Counts");
+      
+      BarChart.append("text")
+        .text('Death Distribution by Gender and Age')
+        .attr("text-anchor", "middle")
+        .attr("class", "graph-title")
+        .attr("y", -10)
+        .attr("x", 620 / 2.0);
+
+      d3.selectAll("g.test").remove()
+      var Bar = BarChart.selectAll("bar")
+        .data(countsPerAgeGender)
+        .enter().append("rect")
+        .attr("x", function (d) { 
+          // console.log(d.label)
+          return x(d.label); })
+        .attr("y", function (d) { return y(d.Count); })
+        .attr("width", x.rangeBand())
+        .attr("height", function (d) { return 250 -y(d.Count); })
+        .append("svg:title")
+        .text(function (death) {
+          return "Count: " + death.Count
+        });
+
+    }
     // gender value corresponds to - 0(male), 1(Female), 2(All)
     // Input age is tenth factor of age - 1
     // colorBy - gender if value 0, age if value 1, 2 means no filter
@@ -259,7 +322,7 @@
         }
         document.getElementById('DeathCount').innerHTML = filterDeaths.length;
         // console.log(filterDeaths)
-
+        countPerAgeGender(filterDeaths)
         svgStreetsContainer.selectAll("circle")
           .data(filterDeaths).enter().append("circle")
           .attr("cx", function (death) { return death.x * scaleFactor; })
@@ -271,7 +334,61 @@
           .text(function (death) {
             return "Age: " + getAgeString(death.age) + ", Gender : " + getGenderString(death.gender);
           })
+
+          plotDeathDistribution();
       })
+      function countPerAgeGender(filterDeaths) {
+        //counts of each gender or age group
+        let male = 0;
+        let female = 0;
+        let a0to10 = 0;
+        let a11to20 = 0;
+        let a21to40 = 0;
+        let a41to60 = 0;
+        let a61to80 = 0;
+        let a80plus = 0;
+        filterDeaths.forEach(death => {
+          if (death.gender == 0) {
+            male += 1;
+          }
+          else {
+            female += 1;
+          }
+
+          switch (death.age) {
+            case "0":
+              a0to10 += 1;
+              break;
+            case "1":
+              a11to20 += 1;
+              break;
+            case "2":
+              a21to40 += 1;
+              break;
+            case "3":
+              a41to60 += 1;
+              break;
+            case "4":
+              a61to80 += 1;
+              break;
+            case "5":
+              a80plus += 1;
+              break;
+          }
+        });
+        countsPerAgeGender = []
+        countsPerAgeGender.push(
+          { "label": "Male", "Count": male },
+          { "label": "Female", "Count": female },
+          { "label": "Age0to10", "Count": a0to10 },
+          { "label": "Ag11to20", "Count": a11to20 },
+          { "label": "Age21to40", "Count": a21to40 },
+          { "label": "Age41to60", "Count": a41to60 },
+          { "label": "Age61to80", "Count": a61to80 },
+          { "label": "Age80+", "Count": a80plus }
+        )
+        //console.log(countsPerAgeGender)
+      }
       function checkAgeGender(death) {
         // console.log("colorBy" + colorBy + "Age" + age + "gender" + gender)
         if (colorBy == 0) {
@@ -353,4 +470,5 @@
     }
   </script>
 </body>
+
 </html>
