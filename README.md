@@ -1,3 +1,5 @@
+Link for Visualization : https://nupsing.github.io/Visualization_Project1/
+
 # Description of Design Process
 I read the input files first to understand how to connect the dataset with each other like the provided dataset for streets, pumps, deathdays and death age sex. Read the supporting pages to understand the overall view of cholera outbreak in London.
 
@@ -9,6 +11,7 @@ I read the input files first to understand how to connect the dataset with each 
 6. The radio button values are color coded to match the corressponding death locations in same color in map. For example, for gender based option, used blue for Male and palevioletred for female.
 7. Similiarly different colors are used for each age group and radio buttons for age have those same colors for easy user identification.
 9. Established linking on mouseover of elliptical dots in line chart using deathDays.csv file. The streets chart will show the death location color coded(based on radio button selection) till the partcular date selected.
+10. Bar chart is shown as an additional chart which represents the total death count by gender and different age groups.
 
 
 # Justification of Design Decisions
